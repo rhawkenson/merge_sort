@@ -34,20 +34,34 @@
 # 18. Place 6 in the array after 1                        [10], [8,9] => [1,6]
 #                                                         [10], [9]   => [1,6,8]
 #                                                         [10]        => [1,6,8,9]
-#                                                                    => [1,6,8,9,10]
+#                                                                     => [1,6,8,9,10]
 
 
-def merge_sort(arr, output = [])
-  if arr.length > 1 
-  left_half = (arr.length/2)-1
-  merge_sort(arr[0..left_half], output)
-
-  right_half = arr.length/2
-  merge_sort(arr[right_half..arr.length-1], output)
+def merge_sort(arr)
+  if arr.length <= 1
+    return arr
+  else 
+    mid = arr.length/2
+    left = merge_sort(arr.slice(0...mid))
+    right = merge_sort(arr.slice(mid...arr.length))
+    merge(left, right)
   end 
+end
 
+
+def merge(left, right)
+  sorted = []
+
+  while !left.empty? && !right.empty? do 
+    if left[0] < right[0]
+      sorted.push(left.shift)
+    else
+      sorted.push(right.shift)
+    end 
+  end 
+  puts sorted.concat(left).concat(right)
+end 
 
 
 arr1 = [1,10,8,9,6]
 merge_sort(arr1)
-
